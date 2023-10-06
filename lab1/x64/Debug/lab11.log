@@ -1,0 +1,2 @@
+﻿main.obj : error LNK2019: unresolved external symbol "void __cdecl minimum<int>(int,int)" (??$minimum@H@@YAXHH@Z) referenced in function main
+D:\Program Files (x86)\source\PK3\Laboratorium\lab1\x64\Debug\lab11.exe : fatal error LNK1120: 1 unresolved externals
