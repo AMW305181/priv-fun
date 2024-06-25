@@ -1,0 +1,8 @@
+score: 200
+shop items:
+		health 0
+		bullet speed 4
+		point multi 4
+		cowboy 1 on 0
+		hawaii 1 on 1
+		queen  0 on 0
