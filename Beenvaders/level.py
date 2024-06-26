@@ -18,6 +18,7 @@ class Level:
         self.score=score
         self.curr_level=curr_level
         self.win=False
+        self.loss=False
         self._generate_level(upgrades["Health"], upgrades["Cowboy_on"], upgrades["Hawaii_on"], upgrades["Queen_on"])
         
     ##Metoda generujaca grupe przeciwnikow    
@@ -118,10 +119,12 @@ class Level:
         #loss
         if self.player.sprite.lives <=0:
             self.game_over=True
+            self.loss=True
             self.display.game_over_mess()
         for enemy in self.enemies.sprites():
             if enemy.rect.bottom>=900-100:
                 self.game_over=True
+                self.loss=True
                 self.display.game_over_mess()
                 break
         #win    

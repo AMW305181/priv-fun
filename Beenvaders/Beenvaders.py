@@ -103,9 +103,12 @@ class Main:
             self.menu_events()
             if self.actions["choice"]:
                 skip=True
+            elif self.actions["return"]:
+                skip=True
             pygame.display.update()
             
         self.actions["choice"]=False
+        self.actions["return"]=False
     
     ##Metoda watku zbierajacego wydarzenia na ekranie poziomu
     def event_thread(self, level):
@@ -118,7 +121,6 @@ class Main:
                     if keys[pygame.K_SPACE]:
                         level.player_move(attack=True, speed_upgrade=self.save.upgrades["Speed"])
                     if keys[pygame.K_ESCAPE]:
-                        leave_level=True
                         self.actions["return"]=True  
 
     ##Metoda ekranu poziomu
@@ -128,9 +130,10 @@ class Main:
         display.level_init_dis(curr_level)
         game_over=False
         leave_level=False
+        
       
         #main loop
-        while not game_over and not leave_level:
+        while not game_over and not self.actions["return"]:
             display.level_dis(curr_level)
             other_events=threading.Thread(target=self.event_thread(level))
             other_events.start()
@@ -140,7 +143,7 @@ class Main:
             pygame.display.update()
             game_over=level.game_over
             self.actions["win"]=level.win
-            
+            self.actions["loss"]=level.loss
             self.FPS.tick(30)
         
         self.save._refresh_score(level.score) 
@@ -158,7 +161,7 @@ class Main:
                         leave_level=True
                         self.actions["return"]=True
         #win
-        while not leave_level:
+        while not leave_level and self.actions["win"]:
             pygame.time.wait(1)
             
             for event in pygame.event.get():
@@ -189,6 +192,7 @@ class Main:
             if self.actions["choose_game"]==True:
                 self.actions["choose_game"]=False
                 self.instructions()
+                
                 curr_level=1
                 for i in range (5):
                     self.level(curr_level)
